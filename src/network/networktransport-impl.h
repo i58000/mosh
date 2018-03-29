@@ -107,6 +107,18 @@ void Transport<MyState, RemoteState>::recv( void )
     }
     
     if ( !found ) {
+
+      FILE *fh = NULL;
+    if(fh = fopen("mosh-notfound.log", "a"))
+    {
+        fprintf(fh, "notfound\n" );
+        fclose(fh);
+        fh = NULL;
+    }
+    else{
+        printf("open log file fail\n");
+    }
+
       //    fprintf( stderr, "Ignoring out-of-order packet. Reference state %d has been discarded or hasn't yet been received.\n", int(inst.old_num) );
       return; /* this is security-sensitive and part of how we enforce idempotency */
     }
