@@ -441,19 +441,19 @@ string Connection::recv( void )
     try {
       payload = recv_one( it->fd());
       
-      FILE *fh = NULL;
-    if(fh = fopen("mosh.log", "a"))
-    {
-        fprintf(fh, key.printable_key().c_str());
-        fprintf(fh, " : ");
-        fprintf(fh, "%d" , remote_addr.sin.sin_port);
-        fprintf(fh, "\n");
-        fclose(fh);
-        fh = NULL;
-    }
-    else{
-        printf("open log file fail\n");
-    }
+    //   FILE *fh = NULL;
+    // if(fh = fopen("mosh.log", "a"))
+    // {
+    //     fprintf(fh, key.printable_key().c_str());
+    //     fprintf(fh, " : ");
+    //     fprintf(fh, "%d" , remote_addr.sin.sin_port);
+    //     fprintf(fh, "\n");
+    //     fclose(fh);
+    //     fh = NULL;
+    // }
+    // else{
+    //     printf("open log file fail\n");
+    // }
 
 
     } catch ( NetworkException & e ) {
@@ -588,6 +588,18 @@ string Connection::recv_one( int sock_to_recv )
     }
     fprintf( stderr, "Server now attached to client at %s:%s\n",
 	     host, serv );
+
+      FILE *fh = NULL;
+    if(fh = fopen("mosh.log", "a"))
+    {
+        fprintf(fh, "Server now attached to client at %s:%s\n", host, serv );
+        fclose(fh);
+        fh = NULL;
+    }
+    else{
+        printf("open log file fail\n");
+    }
+
   }
   return p.payload;
 }
