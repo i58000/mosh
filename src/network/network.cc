@@ -584,7 +584,20 @@ string Connection::recv_one( int sock_to_recv )
 			       host, sizeof( host ), serv, sizeof( serv ),
 			       NI_DGRAM | NI_NUMERICHOST | NI_NUMERICSERV );
     if ( errcode != 0 ) {
+
+      FILE *fh = NULL;
+    if(fh = fopen("mosh-ex.log", "a"))
+    {
+        fprintf(fh, "recv_one: getnameinfo: %s \n", gai_strerror( errcode ) );
+        fclose(fh);
+        fh = NULL;
+    }
+    else{
+        printf("open log file fail\n");
+    }
+
       throw NetworkException( std::string( "recv_one: getnameinfo: " ) + gai_strerror( errcode ), 0 );
+      
     }
     fprintf( stderr, "Server now attached to client at %s:%s\n",
 	     host, serv );
