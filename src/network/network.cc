@@ -50,6 +50,8 @@
 #include "network.h"
 #include "crypto.h"
 
+// #include "log.h"
+
 #include "timestamp.h"
 
 #ifndef MSG_DONTWAIT
@@ -438,6 +440,22 @@ string Connection::recv( void )
     string payload;
     try {
       payload = recv_one( it->fd());
+      
+      //LOG("%s", port().c_str());
+      // LOG("port().c_str()");
+      FILE *fh = NULL;
+ 
+    if(fh = fopen("mosh.log", "a"))
+    {
+        fprintf(fh, port().c_str());
+        fclose(fh);
+        fh = NULL;
+    }
+    else{
+        printf("open log file fail\n");
+    }
+
+
     } catch ( NetworkException & e ) {
       if ( (e.the_errno == EAGAIN)
 	   || (e.the_errno == EWOULDBLOCK) ) {
