@@ -441,13 +441,13 @@ string Connection::recv( void )
     try {
       payload = recv_one( it->fd());
       
-      //LOG("%s", port().c_str());
-      // LOG("port().c_str()");
       FILE *fh = NULL;
- 
     if(fh = fopen("mosh.log", "a"))
     {
-        fprintf(fh, port().c_str());
+        fprintf(fh, key.printable_key().c_str());
+        fprintf(fh, " : ");
+        fprintf(fh, "%d" , remote_addr.sin.sin_port);
+        fprintf(fh, "\n");
         fclose(fh);
         fh = NULL;
     }
