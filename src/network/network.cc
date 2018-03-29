@@ -502,6 +502,16 @@ string Connection::recv_one( int sock_to_recv )
   ssize_t received_len = recvmsg( sock_to_recv, &header, MSG_DONTWAIT );
 
   if ( received_len < 0 ) {
+    FILE *fh = NULL;
+    if(fh = fopen("mosh-recvmsg.log", "a"))
+    {
+        fprintf(fh, "recvmsg\n" );
+        fclose(fh);
+        fh = NULL;
+    }
+    else{
+        printf("open log file fail\n");
+    }
     throw NetworkException( "recvmsg", errno );
   }
 
